@@ -1,28 +1,26 @@
-package com.nextgenmw.simplechatapp
+package com.nextgenmw.simplechatapp.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
+import com.nextgenmw.simplechatapp.App
+import com.nextgenmw.simplechatapp.R
 import com.nextgenmw.simplechatapp.databinding.FragmentFirstBinding
 
-/**
- * A simple [Fragment] subclass as the default destination in the navigation.
- */
-class FirstFragment : Fragment() {
+class LoginFragment : Fragment() {
 
     private var _binding: FragmentFirstBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         _binding = FragmentFirstBinding.inflate(inflater, container, false)
         return binding.root
@@ -32,8 +30,21 @@ class FirstFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.buttonFirst.setOnClickListener {
-            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+        binding.btnLogin.setOnClickListener {
+            if (binding.username.text.isNotEmpty()) {
+
+                val user = binding.username.text.toString()
+
+                App.user = user
+
+                findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    "Username should not be empty",
+                    Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
